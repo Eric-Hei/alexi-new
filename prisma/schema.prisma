@@ -1,0 +1,245 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  role      Role
+  phone     String?
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Champs spécifiques aux locataires
+  situation String? // Pour les locataires
+
+  // Champs spécifiques aux bailleurs
+  type       String? // Pour les bailleurs (privé, social, etc.)
+  properties Int?    // Nombre de logements pour les bailleurs
+
+  // Champs spécifiques aux commissaires de justice
+  office String? // Étude pour les commissaires de justice
+
+  // Champs spécifiques aux médiateurs
+  organization String? // Organisation pour les médiateurs
+
+  // Champs spécifiques aux travailleurs sociaux
+  service String? // Service pour les travailleurs sociaux
+
+  // Champs spécifiques aux agents de préfecture et CCAPEX
+  function String? // Fonction pour les agents de préfecture et CCAPEX
+
+  // Relations
+  casesAsLandlord    Case[]    @relation("LandlordCases")
+  casesAsTenant      Case[]    @relation("TenantCases")
+  casesAsOfficer     Case[]    @relation("OfficerCases")
+  casesAsMediator    Case[]    @relation("MediatorCases")
+  casesAsSocialWorker Case[]   @relation("SocialWorkerCases")
+  notifications      Notification[]
+  mediationRequests  MediationRequest[] @relation("MediationRequests")
+  mediationHandled   MediationRequest[] @relation("MediationHandled")
+}
+
+enum Role {
+  TENANT
+  LANDLORD
+  JUDICIAL_OFFICER
+  MEDIATOR
+  SOCIAL_WORKER
+  PREFECTURE
+  CCAPEX
+  ADMIN
+}
+
+model Case {
+  id            String   @id @default(uuid())
+  reference     String   @unique // Format: ALEXI-YYYY-XXXXX
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  status        CaseStatus
+  stage         ProcedureStage
+  urgency       UrgencyLevel
+  debtAmount    Float
+  description   String?
+
+  // Relations
+  landlordId    String
+  landlord      User     @relation("LandlordCases", fields: [landlordId], references: [id])
+  tenantId      String
+  tenant        User     @relation("TenantCases", fields: [tenantId], references: [id])
+  officerId     String?
+  officer       User?    @relation("OfficerCases", fields: [officerId], references: [id])
+  mediatorId    String?
+  mediator      User?    @relation("MediatorCases", fields: [mediatorId], references: [id])
+  socialWorkerId String?
+  socialWorker  User?    @relation("SocialWorkerCases", fields: [socialWorkerId], references: [id])
+
+  // Autres relations
+  documents     Document[]
+  notifications Notification[]
+  mediationRequests MediationRequest[]
+  events        CaseEvent[]
+
+  // Informations sur le logement
+  housingType   String?  // T1, T2, T3, etc.
+  housingArea   Float?   // Surface en m²
+  rent          Float?   // Loyer mensuel
+  charges       Float?   // Charges mensuelles
+  deposit       Float?   // Dépôt de garantie
+  leaseStartDate DateTime? // Date de début du bail
+  leaseType     String?  // Type de bail
+  leaseDuration Int?     // Durée du bail en mois
+  address       String?  // Adresse du logement
+}
+
+enum CaseStatus {
+  OPEN
+  IN_PROGRESS
+  MEDIATION
+  RESOLVED
+  CLOSED
+}
+
+enum ProcedureStage {
+  UNPAID_REPORT
+  PAYMENT_COMMAND
+  ASSIGNMENT
+  HEARING
+  DECISION
+  EVICTION_COMMAND
+  EVICTION
+}
+
+enum UrgencyLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model Document {
+  id        String   @id @default(uuid())
+  title     String
+  type      DocumentType
+  filePath  String
+  uploadedAt DateTime @default(now())
+
+  // Relations
+  caseId    String
+  case      Case     @relation(fields: [caseId], references: [id])
+}
+
+enum DocumentType {
+  PAYMENT_COMMAND
+  ASSIGNMENT
+  COURT_DECISION
+  EVICTION_COMMAND
+  PAYMENT_PLAN
+  MEDIATION_AGREEMENT
+  ID_DOCUMENT
+  LEASE
+  INCOME_PROOF
+  OTHER
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  read      Boolean  @default(false)
+
+  // Relations
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  caseId    String?
+  case      Case?    @relation(fields: [caseId], references: [id])
+}
+
+model MediationRequest {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  status    MediationStatus
+  reason    String
+  proposal  String?
+
+  // Relations
+  requesterId String
+  requester   User     @relation("MediationRequests", fields: [requesterId], references: [id])
+  mediatorId  String?
+  mediator    User?    @relation("MediationHandled", fields: [mediatorId], references: [id])
+  caseId      String
+  case        Case     @relation(fields: [caseId], references: [id])
+
+  // Informations sur les rendez-vous
+  meetings    MediationMeeting[]
+}
+
+enum MediationStatus {
+  REQUESTED
+  ACCEPTED
+  IN_PROGRESS
+  AGREEMENT_FOUND
+  FAILED
+  CANCELLED
+}
+
+model MediationMeeting {
+  id        String   @id @default(uuid())
+  date      DateTime
+  location  String?
+  videoLink String?
+  status    MeetingStatus
+  notes     String?
+
+  // Relations
+  mediationId String
+  mediation   MediationRequest @relation(fields: [mediationId], references: [id])
+}
+
+enum MeetingStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  POSTPONED
+}
+
+model CaseEvent {
+  id        String   @id @default(uuid())
+  date      DateTime
+  type      EventType
+  description String
+  actor     String   // Qui a effectué l'action
+
+  // Relations
+  caseId    String
+  case      Case     @relation(fields: [caseId], references: [id])
+}
+
+enum EventType {
+  CASE_CREATED
+  STATUS_CHANGED
+  STAGE_CHANGED
+  DOCUMENT_ADDED
+  MEDIATION_REQUESTED
+  MEDIATION_ACCEPTED
+  MEDIATION_COMPLETED
+  PAYMENT_MADE
+  PAYMENT_PLAN_CREATED
+  SOCIAL_WORKER_ASSIGNED
+  CCAPEX_REVIEW
+  OTHER
+}
