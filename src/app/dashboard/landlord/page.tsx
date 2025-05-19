@@ -101,54 +101,56 @@ export default function LandlordDashboardPage() {
           <div className="fr-card__content">
             <p className="fr-text--sm fr-mb-2w">Liste des dossiers d'impayés en cours</p>
             <div className="fr-table fr-table--bordered">
-              <thead>
-                <tr>
-                  <th scope="col" style={{ minWidth: '140px' }}>Référence</th>
-                  <th scope="col">Locataire</th>
-                  <th scope="col">Adresse</th>
-                  <th scope="col">Montant dû</th>
-                  <th scope="col">Statut</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>ALEXI-2025-12345</td>
-                  <td>Jean Dupont</td>
-                  <td>12 rue des Lilas, 75020 Paris</td>
-                  <td>2 500,00 €</td>
-                  <td><span className="fr-badge fr-badge--warning fr-badge--no-icon">Commandement de payer</span></td>
-                  <td>
-                    <Link href="/dashboard/landlord/case/12345" className="fr-btn fr-btn--sm">
-                      Détails
-                    </Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td>ALEXI-2025-12346</td>
-                  <td>Marie Martin</td>
-                  <td>45 avenue Victor Hugo, 75016 Paris</td>
-                  <td>3 200,00 €</td>
-                  <td><span className="fr-badge fr-badge--error fr-badge--no-icon">Assignation</span></td>
-                  <td>
-                    <Link href="/dashboard/landlord/case/12346" className="fr-btn fr-btn--sm">
-                      Détails
-                    </Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td>ALEXI-2025-12347</td>
-                  <td>Pierre Durand</td>
-                  <td>8 boulevard Haussmann, 75009 Paris</td>
-                  <td>2 150,00 €</td>
-                  <td><span className="fr-badge fr-badge--info fr-badge--no-icon">Médiation en cours</span></td>
-                  <td>
-                    <Link href="/dashboard/landlord/case/12347" className="fr-btn fr-btn--sm">
-                      Détails
-                    </Link>
-                  </td>
-                </tr>
-              </tbody>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col" style={{ minWidth: '140px' }}>Référence</th>
+                    <th scope="col">Locataire</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Montant dû</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ALEXI-2025-12345</td>
+                    <td>Jean Dupont</td>
+                    <td>12 rue des Lilas, 75020 Paris</td>
+                    <td>2 500,00 €</td>
+                    <td><span className="fr-badge fr-badge--warning fr-badge--no-icon">Commandement de payer</span></td>
+                    <td>
+                      <Link href="/dashboard/landlord/case/12345" className="fr-btn fr-btn--sm">
+                        Détails
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ALEXI-2025-12346</td>
+                    <td>Marie Martin</td>
+                    <td>45 avenue Victor Hugo, 75016 Paris</td>
+                    <td>3 200,00 €</td>
+                    <td><span className="fr-badge fr-badge--error fr-badge--no-icon">Assignation</span></td>
+                    <td>
+                      <Link href="/dashboard/landlord/case/12346" className="fr-btn fr-btn--sm">
+                        Détails
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ALEXI-2025-12347</td>
+                    <td>Pierre Durand</td>
+                    <td>8 boulevard Haussmann, 75009 Paris</td>
+                    <td>2 150,00 €</td>
+                    <td><span className="fr-badge fr-badge--info fr-badge--no-icon">Médiation en cours</span></td>
+                    <td>
+                      <Link href="/dashboard/landlord/case/12347" className="fr-btn fr-btn--sm">
+                        Détails
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             <div className="fr-pagination" aria-label="Pagination">
@@ -209,55 +211,57 @@ export default function LandlordDashboardPage() {
 
             <p className="fr-text--sm fr-mb-2w">Propositions de médiation en attente</p>
             <div className="fr-table fr-table--bordered">
-              <thead>
-                <tr>
-                  <th scope="col" style={{ minWidth: '140px' }}>Référence</th>
-                  <th scope="col">Locataire</th>
-                  <th scope="col">Proposition</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>ALEXI-2025-12345</td>
-                  <td>Jean Dupont</td>
-                  <td>Plan de paiement sur 12 mois</td>
-                  <td>10/05/2025</td>
-                  <td>
-                    <div className="fr-btns-group fr-btns-group--inline">
-                      <Link href="/dashboard/landlord/mediation/12345" className="fr-btn fr-btn--sm">
-                        Voir
-                      </Link>
-                      <button className="fr-btn fr-btn--sm fr-btn--secondary">
-                        Accepter
-                      </button>
-                      <button className="fr-btn fr-btn--sm fr-btn--tertiary">
-                        Refuser
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>ALEXI-2025-12347</td>
-                  <td>Pierre Durand</td>
-                  <td>Réduction temporaire de loyer</td>
-                  <td>12/05/2025</td>
-                  <td>
-                    <div className="fr-btns-group fr-btns-group--inline">
-                      <Link href="/dashboard/landlord/mediation/12347" className="fr-btn fr-btn--sm">
-                        Voir
-                      </Link>
-                      <button className="fr-btn fr-btn--sm fr-btn--secondary">
-                        Accepter
-                      </button>
-                      <button className="fr-btn fr-btn--sm fr-btn--tertiary">
-                        Refuser
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col" style={{ minWidth: '140px' }}>Référence</th>
+                    <th scope="col">Locataire</th>
+                    <th scope="col">Proposition</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ALEXI-2025-12345</td>
+                    <td>Jean Dupont</td>
+                    <td>Plan de paiement sur 12 mois</td>
+                    <td>10/05/2025</td>
+                    <td>
+                      <div className="fr-btns-group fr-btns-group--inline">
+                        <Link href="/dashboard/landlord/mediation/12345" className="fr-btn fr-btn--sm">
+                          Voir
+                        </Link>
+                        <button className="fr-btn fr-btn--sm fr-btn--secondary">
+                          Accepter
+                        </button>
+                        <button className="fr-btn fr-btn--sm fr-btn--tertiary">
+                          Refuser
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ALEXI-2025-12347</td>
+                    <td>Pierre Durand</td>
+                    <td>Réduction temporaire de loyer</td>
+                    <td>12/05/2025</td>
+                    <td>
+                      <div className="fr-btns-group fr-btns-group--inline">
+                        <Link href="/dashboard/landlord/mediation/12347" className="fr-btn fr-btn--sm">
+                          Voir
+                        </Link>
+                        <button className="fr-btn fr-btn--sm fr-btn--secondary">
+                          Accepter
+                        </button>
+                        <button className="fr-btn fr-btn--sm fr-btn--tertiary">
+                          Refuser
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

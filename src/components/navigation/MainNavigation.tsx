@@ -43,80 +43,182 @@ export default function MainNavigation() {
 
             {/* Liens spécifiques selon le rôle */}
             {session.user.role === 'TENANT' && (
-              <li className="fr-nav__item">
-                <Link
-                  className={`fr-nav__link ${isActive('/dashboard/tenant/aid') ? 'fr-nav__link--active' : ''}`}
-                  href="/dashboard/tenant/aid"
-                >
-                  Demander une aide
-                </Link>
-              </li>
+              <>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/tenant/aid') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/tenant/aid"
+                  >
+                    Demander une aide
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/messages') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/messages"
+                  >
+                    Messages
+                  </Link>
+                </li>
+              </>
             )}
 
             {session.user.role === 'LANDLORD' && (
-              <li className="fr-nav__item">
-                <Link
-                  className={`fr-nav__link ${isActive('/dashboard/landlord/mediation') ? 'fr-nav__link--active' : ''}`}
-                  href="/dashboard/landlord/mediation"
-                >
-                  Demander une médiation
-                </Link>
-              </li>
+              <>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/landlord/mediation') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/landlord/mediation"
+                  >
+                    Demander une médiation
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/messages') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/messages"
+                  >
+                    Messages
+                  </Link>
+                </li>
+              </>
             )}
 
             {session.user.role === 'JUDICIAL_OFFICER' && (
-              <li className="fr-nav__item">
-                <Link
-                  className={`fr-nav__link ${isActive('/dashboard/judicial/notification/new') ? 'fr-nav__link--active' : ''}`}
-                  href="/dashboard/judicial/notification/new"
-                >
-                  Nouvelle notification
-                </Link>
-              </li>
+              <>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/judicial/notification/new') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/judicial/notification/new"
+                  >
+                    Nouvelle notification
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/messages') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/messages"
+                  >
+                    Messages
+                  </Link>
+                </li>
+              </>
             )}
 
             {session.user.role === 'MEDIATOR' && (
-              <li className="fr-nav__item">
-                <Link
-                  className={`fr-nav__link ${isActive('/dashboard/mediator/case') ? 'fr-nav__link--active' : ''}`}
-                  href="/dashboard/mediator/case"
-                >
-                  Mes dossiers
-                </Link>
-              </li>
+              <>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/mediator/case') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/mediator/case"
+                  >
+                    Mes dossiers
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/messages') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/messages"
+                  >
+                    Messages
+                  </Link>
+                </li>
+              </>
             )}
 
             {session.user.role === 'SOCIAL_WORKER' && (
-              <li className="fr-nav__item">
-                <Link
-                  className={`fr-nav__link ${isActive('/dashboard/social/alerts') ? 'fr-nav__link--active' : ''}`}
-                  href="/dashboard/social/alerts"
-                >
-                  Alertes
-                </Link>
-              </li>
+              <>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/social/alerts') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/social/alerts"
+                  >
+                    Alertes
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/messages') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/messages"
+                  >
+                    Messages
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/statistics') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/statistics"
+                  >
+                    Statistiques
+                  </Link>
+                </li>
+              </>
             )}
 
             {session.user.role === 'PREFECTURE' && (
-              <li className="fr-nav__item">
-                <Link
-                  className={`fr-nav__link ${isActive('/dashboard/prefecture/analytics') ? 'fr-nav__link--active' : ''}`}
-                  href="/dashboard/prefecture/analytics/trends"
-                >
-                  Statistiques
-                </Link>
-              </li>
+              <>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/prefecture/analytics') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/prefecture/analytics/trends"
+                  >
+                    Statistiques
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/statistics') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/statistics"
+                  >
+                    Statistiques détaillées
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/messages') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/messages"
+                  >
+                    Messages
+                  </Link>
+                </li>
+              </>
             )}
 
             {session.user.role === 'CCAPEX' && (
-              <li className="fr-nav__item">
-                <Link
-                  className={`fr-nav__link ${isActive('/dashboard/ccapex/meeting') ? 'fr-nav__link--active' : ''}`}
-                  href="/dashboard/ccapex/meeting/new"
-                >
-                  Planifier une réunion
-                </Link>
-              </li>
+              <>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/ccapex/meeting') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/ccapex/meeting/new"
+                  >
+                    Planifier une réunion
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/ccapex/meetings') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/ccapex/meetings"
+                  >
+                    Réunions
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/statistics') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/statistics"
+                  >
+                    Statistiques
+                  </Link>
+                </li>
+                <li className="fr-nav__item">
+                  <Link
+                    className={`fr-nav__link ${isActive('/dashboard/messages') ? 'fr-nav__link--active' : ''}`}
+                    href="/dashboard/messages"
+                  >
+                    Messages
+                  </Link>
+                </li>
+              </>
             )}
 
             {/* Lien vers les ressources */}

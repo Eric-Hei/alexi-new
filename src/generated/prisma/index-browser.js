@@ -128,13 +128,22 @@ exports.Prisma.UserScalarFieldEnum = {
   address: 'address',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  isActive: 'isActive',
   situation: 'situation',
+  familyStatus: 'familyStatus',
+  dependents: 'dependents',
+  monthlyIncome: 'monthlyIncome',
   type: 'type',
   properties: 'properties',
+  siret: 'siret',
   office: 'office',
+  licenseNumber: 'licenseNumber',
   organization: 'organization',
+  certifications: 'certifications',
   service: 'service',
-  function: 'function'
+  socialDepartment: 'socialDepartment',
+  function: 'function',
+  prefectureDepartment: 'prefectureDepartment'
 };
 
 exports.Prisma.CaseScalarFieldEnum = {
@@ -147,6 +156,9 @@ exports.Prisma.CaseScalarFieldEnum = {
   urgency: 'urgency',
   debtAmount: 'debtAmount',
   description: 'description',
+  reportDate: 'reportDate',
+  lastActionDate: 'lastActionDate',
+  nextDeadline: 'nextDeadline',
   landlordId: 'landlordId',
   tenantId: 'tenantId',
   officerId: 'officerId',
@@ -160,7 +172,12 @@ exports.Prisma.CaseScalarFieldEnum = {
   leaseStartDate: 'leaseStartDate',
   leaseType: 'leaseType',
   leaseDuration: 'leaseDuration',
-  address: 'address'
+  address: 'address',
+  city: 'city',
+  zipCode: 'zipCode',
+  department: 'department',
+  housingBenefit: 'housingBenefit',
+  benefitAmount: 'benefitAmount'
 };
 
 exports.Prisma.DocumentScalarFieldEnum = {
@@ -168,8 +185,14 @@ exports.Prisma.DocumentScalarFieldEnum = {
   title: 'title',
   type: 'type',
   filePath: 'filePath',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
   uploadedAt: 'uploadedAt',
-  caseId: 'caseId'
+  description: 'description',
+  isPublic: 'isPublic',
+  caseId: 'caseId',
+  uploadedById: 'uploadedById',
+  aidId: 'aidId'
 };
 
 exports.Prisma.NotificationScalarFieldEnum = {
@@ -178,6 +201,10 @@ exports.Prisma.NotificationScalarFieldEnum = {
   content: 'content',
   createdAt: 'createdAt',
   read: 'read',
+  readAt: 'readAt',
+  type: 'type',
+  priority: 'priority',
+  expiresAt: 'expiresAt',
   userId: 'userId',
   caseId: 'caseId'
 };
@@ -189,6 +216,10 @@ exports.Prisma.MediationRequestScalarFieldEnum = {
   status: 'status',
   reason: 'reason',
   proposal: 'proposal',
+  deadline: 'deadline',
+  disputeAmount: 'disputeAmount',
+  disputeDescription: 'disputeDescription',
+  preferredLanguage: 'preferredLanguage',
   requesterId: 'requesterId',
   mediatorId: 'mediatorId',
   caseId: 'caseId'
@@ -197,10 +228,13 @@ exports.Prisma.MediationRequestScalarFieldEnum = {
 exports.Prisma.MediationMeetingScalarFieldEnum = {
   id: 'id',
   date: 'date',
+  duration: 'duration',
   location: 'location',
   videoLink: 'videoLink',
   status: 'status',
   notes: 'notes',
+  summary: 'summary',
+  attendees: 'attendees',
   mediationId: 'mediationId'
 };
 
@@ -210,7 +244,116 @@ exports.Prisma.CaseEventScalarFieldEnum = {
   type: 'type',
   description: 'description',
   actor: 'actor',
+  actorRole: 'actorRole',
+  metadata: 'metadata',
+  importance: 'importance',
   caseId: 'caseId'
+};
+
+exports.Prisma.AidScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  status: 'status',
+  amount: 'amount',
+  requestedAt: 'requestedAt',
+  submittedAt: 'submittedAt',
+  validatedAt: 'validatedAt',
+  decisionDate: 'decisionDate',
+  paymentDate: 'paymentDate',
+  reason: 'reason',
+  applicationRef: 'applicationRef',
+  aidPurpose: 'aidPurpose',
+  beneficiary: 'beneficiary',
+  caseId: 'caseId',
+  applicantId: 'applicantId',
+  notes: 'notes',
+  followUpDate: 'followUpDate'
+};
+
+exports.Prisma.RepaymentPlanScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  totalAmount: 'totalAmount',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  status: 'status',
+  frequency: 'frequency',
+  initialPayment: 'initialPayment',
+  regularAmount: 'regularAmount',
+  caseId: 'caseId',
+  tenantId: 'tenantId',
+  landlordId: 'landlordId',
+  notes: 'notes',
+  validatedBy: 'validatedBy',
+  validatedAt: 'validatedAt'
+};
+
+exports.Prisma.InstallmentScalarFieldEnum = {
+  id: 'id',
+  dueDate: 'dueDate',
+  amount: 'amount',
+  paidAmount: 'paidAmount',
+  paidAt: 'paidAt',
+  status: 'status',
+  paymentMethod: 'paymentMethod',
+  paymentReference: 'paymentReference',
+  repaymentPlanId: 'repaymentPlanId',
+  notes: 'notes'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  content: 'content',
+  read: 'read',
+  readAt: 'readAt',
+  senderId: 'senderId',
+  recipientId: 'recipientId',
+  caseId: 'caseId'
+};
+
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  content: 'content',
+  isInternal: 'isInternal',
+  authorId: 'authorId',
+  caseId: 'caseId'
+};
+
+exports.Prisma.CaseStatisticScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  period: 'period',
+  department: 'department',
+  city: 'city',
+  newCasesCount: 'newCasesCount',
+  resolvedCount: 'resolvedCount',
+  evictionCount: 'evictionCount',
+  mediationCount: 'mediationCount',
+  preventionRate: 'preventionRate',
+  averageDebtAmount: 'averageDebtAmount'
+};
+
+exports.Prisma.CcapexMeetingScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  location: 'location',
+  department: 'department',
+  agenda: 'agenda',
+  minutes: 'minutes',
+  attendees: 'attendees'
+};
+
+exports.Prisma.CcapexMeetingCaseScalarFieldEnum = {
+  id: 'id',
+  meetingId: 'meetingId',
+  caseId: 'caseId',
+  decision: 'decision',
+  recommendation: 'recommendation',
+  priority: 'priority'
 };
 
 exports.Prisma.SortOrder = {
@@ -238,7 +381,9 @@ exports.CaseStatus = exports.$Enums.CaseStatus = {
   IN_PROGRESS: 'IN_PROGRESS',
   MEDIATION: 'MEDIATION',
   RESOLVED: 'RESOLVED',
-  CLOSED: 'CLOSED'
+  CLOSED: 'CLOSED',
+  SUSPENDED: 'SUSPENDED',
+  ARCHIVED: 'ARCHIVED'
 };
 
 exports.ProcedureStage = exports.$Enums.ProcedureStage = {
@@ -248,13 +393,18 @@ exports.ProcedureStage = exports.$Enums.ProcedureStage = {
   HEARING: 'HEARING',
   DECISION: 'DECISION',
   EVICTION_COMMAND: 'EVICTION_COMMAND',
-  EVICTION: 'EVICTION'
+  EVICTION: 'EVICTION',
+  PREVENTION: 'PREVENTION',
+  SOCIAL_ASSESSMENT: 'SOCIAL_ASSESSMENT',
+  PAYMENT_PLAN: 'PAYMENT_PLAN',
+  CCAPEX_REVIEW: 'CCAPEX_REVIEW'
 };
 
 exports.UrgencyLevel = exports.$Enums.UrgencyLevel = {
   LOW: 'LOW',
   MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH'
+  HIGH: 'HIGH',
+  CRITICAL: 'CRITICAL'
 };
 
 exports.DocumentType = exports.$Enums.DocumentType = {
@@ -262,12 +412,48 @@ exports.DocumentType = exports.$Enums.DocumentType = {
   ASSIGNMENT: 'ASSIGNMENT',
   COURT_DECISION: 'COURT_DECISION',
   EVICTION_COMMAND: 'EVICTION_COMMAND',
-  PAYMENT_PLAN: 'PAYMENT_PLAN',
-  MEDIATION_AGREEMENT: 'MEDIATION_AGREEMENT',
-  ID_DOCUMENT: 'ID_DOCUMENT',
+  EVICTION_NOTICE: 'EVICTION_NOTICE',
   LEASE: 'LEASE',
+  LEASE_AMENDMENT: 'LEASE_AMENDMENT',
+  INVENTORY: 'INVENTORY',
+  PAYMENT_PLAN: 'PAYMENT_PLAN',
+  PAYMENT_PROOF: 'PAYMENT_PROOF',
   INCOME_PROOF: 'INCOME_PROOF',
+  TAX_NOTICE: 'TAX_NOTICE',
+  BANK_STATEMENT: 'BANK_STATEMENT',
+  ID_DOCUMENT: 'ID_DOCUMENT',
+  FAMILY_RECORD_BOOK: 'FAMILY_RECORD_BOOK',
+  RESIDENCE_PERMIT: 'RESIDENCE_PERMIT',
+  MEDIATION_AGREEMENT: 'MEDIATION_AGREEMENT',
+  MEDIATION_REPORT: 'MEDIATION_REPORT',
+  AID_APPLICATION: 'AID_APPLICATION',
+  AID_SUPPORTING_DOCUMENT: 'AID_SUPPORTING_DOCUMENT',
+  AID_DECISION_NOTIFICATION: 'AID_DECISION_NOTIFICATION',
+  SOCIAL_ASSESSMENT: 'SOCIAL_ASSESSMENT',
+  CORRESPONDENCE: 'CORRESPONDENCE',
+  NOTICE: 'NOTICE',
+  REPORT: 'REPORT',
   OTHER: 'OTHER'
+};
+
+exports.NotificationType = exports.$Enums.NotificationType = {
+  CASE_UPDATE: 'CASE_UPDATE',
+  DOCUMENT_ADDED: 'DOCUMENT_ADDED',
+  DEADLINE_REMINDER: 'DEADLINE_REMINDER',
+  PAYMENT_DUE: 'PAYMENT_DUE',
+  PAYMENT_RECEIVED: 'PAYMENT_RECEIVED',
+  MEDIATION_REQUEST: 'MEDIATION_REQUEST',
+  MEDIATION_UPDATE: 'MEDIATION_UPDATE',
+  AID_UPDATE: 'AID_UPDATE',
+  SYSTEM: 'SYSTEM',
+  OTHER: 'OTHER'
+};
+
+exports.NotificationPriority = exports.$Enums.NotificationPriority = {
+  LOW: 'LOW',
+  NORMAL: 'NORMAL',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
 };
 
 exports.MediationStatus = exports.$Enums.MediationStatus = {
@@ -276,29 +462,103 @@ exports.MediationStatus = exports.$Enums.MediationStatus = {
   IN_PROGRESS: 'IN_PROGRESS',
   AGREEMENT_FOUND: 'AGREEMENT_FOUND',
   FAILED: 'FAILED',
-  CANCELLED: 'CANCELLED'
+  CANCELLED: 'CANCELLED',
+  PENDING_APPROVAL: 'PENDING_APPROVAL'
 };
 
 exports.MeetingStatus = exports.$Enums.MeetingStatus = {
   SCHEDULED: 'SCHEDULED',
+  CONFIRMED: 'CONFIRMED',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED',
-  POSTPONED: 'POSTPONED'
+  POSTPONED: 'POSTPONED',
+  NO_SHOW: 'NO_SHOW'
 };
 
 exports.EventType = exports.$Enums.EventType = {
   CASE_CREATED: 'CASE_CREATED',
+  CASE_UPDATED: 'CASE_UPDATED',
   STATUS_CHANGED: 'STATUS_CHANGED',
   STAGE_CHANGED: 'STAGE_CHANGED',
   DOCUMENT_ADDED: 'DOCUMENT_ADDED',
+  DOCUMENT_UPDATED: 'DOCUMENT_UPDATED',
+  DOCUMENT_DELETED: 'DOCUMENT_DELETED',
   MEDIATION_REQUESTED: 'MEDIATION_REQUESTED',
   MEDIATION_ACCEPTED: 'MEDIATION_ACCEPTED',
+  MEDIATION_MEETING: 'MEDIATION_MEETING',
   MEDIATION_COMPLETED: 'MEDIATION_COMPLETED',
+  MEDIATION_FAILED: 'MEDIATION_FAILED',
   PAYMENT_MADE: 'PAYMENT_MADE',
+  PAYMENT_MISSED: 'PAYMENT_MISSED',
   PAYMENT_PLAN_CREATED: 'PAYMENT_PLAN_CREATED',
+  PAYMENT_PLAN_UPDATED: 'PAYMENT_PLAN_UPDATED',
+  PAYMENT_PLAN_COMPLETED: 'PAYMENT_PLAN_COMPLETED',
   SOCIAL_WORKER_ASSIGNED: 'SOCIAL_WORKER_ASSIGNED',
+  OFFICER_ASSIGNED: 'OFFICER_ASSIGNED',
+  MEDIATOR_ASSIGNED: 'MEDIATOR_ASSIGNED',
+  AID_REQUESTED: 'AID_REQUESTED',
+  AID_APPROVED: 'AID_APPROVED',
+  AID_REJECTED: 'AID_REJECTED',
+  AID_PAID: 'AID_PAID',
   CCAPEX_REVIEW: 'CCAPEX_REVIEW',
+  CCAPEX_DECISION: 'CCAPEX_DECISION',
+  COURT_HEARING: 'COURT_HEARING',
+  COURT_DECISION: 'COURT_DECISION',
+  NOTIFICATION_SENT: 'NOTIFICATION_SENT',
+  MESSAGE_SENT: 'MESSAGE_SENT',
+  CALL_MADE: 'CALL_MADE',
+  COMMENT_ADDED: 'COMMENT_ADDED',
   OTHER: 'OTHER'
+};
+
+exports.AidType = exports.$Enums.AidType = {
+  FSL: 'FSL',
+  CAF: 'CAF',
+  ACTION_LOGEMENT: 'ACTION_LOGEMENT',
+  CCAS: 'CCAS',
+  MAIRIE: 'MAIRIE',
+  DEPARTEMENT: 'DEPARTEMENT',
+  ASSOCIATION: 'ASSOCIATION',
+  AUTRE: 'AUTRE'
+};
+
+exports.AidStatus = exports.$Enums.AidStatus = {
+  EN_ATTENTE_DE_SOUMISSION: 'EN_ATTENTE_DE_SOUMISSION',
+  SOUMISE: 'SOUMISE',
+  EN_COURS_D_INSTRUCTION: 'EN_COURS_D_INSTRUCTION',
+  COMPLEMENT_REQUIS: 'COMPLEMENT_REQUIS',
+  ACCEPTEE: 'ACCEPTEE',
+  ACCEPTEE_PARTIELLEMENT: 'ACCEPTEE_PARTIELLEMENT',
+  REFUSEE: 'REFUSEE',
+  VERSEMENT_EN_COURS: 'VERSEMENT_EN_COURS',
+  VERSEE: 'VERSEE',
+  ANNULEE: 'ANNULEE'
+};
+
+exports.RepaymentPlanStatus = exports.$Enums.RepaymentPlanStatus = {
+  DRAFT: 'DRAFT',
+  PROPOSED: 'PROPOSED',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  DEFAULTED: 'DEFAULTED',
+  RENEGOTIATED: 'RENEGOTIATED',
+  CANCELLED: 'CANCELLED'
+};
+
+exports.PaymentFrequency = exports.$Enums.PaymentFrequency = {
+  WEEKLY: 'WEEKLY',
+  BIWEEKLY: 'BIWEEKLY',
+  MONTHLY: 'MONTHLY',
+  QUARTERLY: 'QUARTERLY'
+};
+
+exports.InstallmentStatus = exports.$Enums.InstallmentStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  PARTIALLY_PAID: 'PARTIALLY_PAID',
+  LATE: 'LATE',
+  DEFAULTED: 'DEFAULTED',
+  CANCELLED: 'CANCELLED'
 };
 
 exports.Prisma.ModelName = {
@@ -308,7 +568,15 @@ exports.Prisma.ModelName = {
   Notification: 'Notification',
   MediationRequest: 'MediationRequest',
   MediationMeeting: 'MediationMeeting',
-  CaseEvent: 'CaseEvent'
+  CaseEvent: 'CaseEvent',
+  Aid: 'Aid',
+  RepaymentPlan: 'RepaymentPlan',
+  Installment: 'Installment',
+  Message: 'Message',
+  Comment: 'Comment',
+  CaseStatistic: 'CaseStatistic',
+  CcapexMeeting: 'CcapexMeeting',
+  CcapexMeetingCase: 'CcapexMeetingCase'
 };
 
 /**

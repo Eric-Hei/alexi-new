@@ -91,59 +91,61 @@ export default function SocialAlertsPage() {
           </h2>
           <div className="fr-card__content">
             <div className="fr-table fr-table--bordered">
-              <caption>Alertes nécessitant une intervention immédiate</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Référence</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Locataire</th>
-                  <th scope="col">Adresse</th>
-                  <th scope="col">Détecté le</th>
-                  <th scope="col">Délai d'intervention</th>
-                  <th scope="col">Priorité</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>ALEXI-2025-12345</td>
-                  <td>Assignation</td>
-                  <td>Jean Dupont</td>
-                  <td>12 rue des Lilas, 75020 Paris</td>
-                  <td>10/05/2025</td>
-                  <td><span className="fr-text--bold fr-text--error">1 jour</span></td>
-                  <td><span className="fr-badge fr-badge--error fr-badge--no-icon">Haute</span></td>
-                  <td>
-                    <div className="fr-btns-group fr-btns-group--inline">
-                      <Link href="/dashboard/social/case/12345" className="fr-btn fr-btn--sm">
-                        Voir
-                      </Link>
-                      <button className="fr-btn fr-btn--sm fr-btn--secondary">
-                        Prendre en charge
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>ALEXI-2025-12346</td>
-                  <td>Ménage vulnérable</td>
-                  <td>Marie Martin</td>
-                  <td>45 avenue Victor Hugo, 75016 Paris</td>
-                  <td>11/05/2025</td>
-                  <td><span className="fr-text--bold fr-text--error">2 jours</span></td>
-                  <td><span className="fr-badge fr-badge--error fr-badge--no-icon">Haute</span></td>
-                  <td>
-                    <div className="fr-btns-group fr-btns-group--inline">
-                      <Link href="/dashboard/social/case/12346" className="fr-btn fr-btn--sm">
-                        Voir
-                      </Link>
-                      <button className="fr-btn fr-btn--sm fr-btn--secondary">
-                        Prendre en charge
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <table>
+                <caption>Alertes nécessitant une intervention immédiate</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Référence</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Locataire</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Détecté le</th>
+                    <th scope="col">Délai d'intervention</th>
+                    <th scope="col">Priorité</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ALEXI-2025-12345</td>
+                    <td>Assignation</td>
+                    <td>Jean Dupont</td>
+                    <td>12 rue des Lilas, 75020 Paris</td>
+                    <td>10/05/2025</td>
+                    <td><span className="fr-text--bold fr-text--error">1 jour</span></td>
+                    <td><span className="fr-badge fr-badge--error fr-badge--no-icon">Haute</span></td>
+                    <td>
+                      <div className="fr-btns-group fr-btns-group--inline">
+                        <Link href="/dashboard/social/case/12345" className="fr-btn fr-btn--sm">
+                          Voir
+                        </Link>
+                        <button className="fr-btn fr-btn--sm fr-btn--secondary">
+                          Prendre en charge
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ALEXI-2025-12346</td>
+                    <td>Ménage vulnérable</td>
+                    <td>Marie Martin</td>
+                    <td>45 avenue Victor Hugo, 75016 Paris</td>
+                    <td>11/05/2025</td>
+                    <td><span className="fr-text--bold fr-text--error">2 jours</span></td>
+                    <td><span className="fr-badge fr-badge--error fr-badge--no-icon">Haute</span></td>
+                    <td>
+                      <div className="fr-btns-group fr-btns-group--inline">
+                        <Link href="/dashboard/social/case/12346" className="fr-btn fr-btn--sm">
+                          Voir
+                        </Link>
+                        <button className="fr-btn fr-btn--sm fr-btn--secondary">
+                          Prendre en charge
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -157,56 +159,58 @@ export default function SocialAlertsPage() {
           </h2>
           <div className="fr-card__content">
             <div className="fr-table fr-table--bordered">
-              <caption>Alertes détectées au cours des 7 derniers jours</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Référence</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Locataire</th>
-                  <th scope="col">Adresse</th>
-                  <th scope="col">Détecté le</th>
-                  <th scope="col">Priorité</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>ALEXI-2025-12350</td>
-                  <td>Nouvel impayé</td>
-                  <td>Sophie Petit</td>
-                  <td>8 rue du Commerce, 75015 Paris</td>
-                  <td>12/05/2025</td>
-                  <td><span className="fr-badge fr-badge--warning fr-badge--no-icon">Moyenne</span></td>
-                  <td>
-                    <div className="fr-btns-group fr-btns-group--inline">
-                      <Link href="/dashboard/social/case/12350" className="fr-btn fr-btn--sm">
-                        Voir
-                      </Link>
-                      <button className="fr-btn fr-btn--sm fr-btn--secondary">
-                        Prendre en charge
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>ALEXI-2025-12349</td>
-                  <td>Présence d'enfants</td>
-                  <td>Thomas Bernard</td>
-                  <td>25 rue Lepic, 75018 Paris</td>
-                  <td>11/05/2025</td>
-                  <td><span className="fr-badge fr-badge--warning fr-badge--no-icon">Moyenne</span></td>
-                  <td>
-                    <div className="fr-btns-group fr-btns-group--inline">
-                      <Link href="/dashboard/social/case/12349" className="fr-btn fr-btn--sm">
-                        Voir
-                      </Link>
-                      <button className="fr-btn fr-btn--sm fr-btn--secondary">
-                        Prendre en charge
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <table>
+                <caption>Alertes détectées au cours des 7 derniers jours</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Référence</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Locataire</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Détecté le</th>
+                    <th scope="col">Priorité</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ALEXI-2025-12350</td>
+                    <td>Nouvel impayé</td>
+                    <td>Sophie Petit</td>
+                    <td>8 rue du Commerce, 75015 Paris</td>
+                    <td>12/05/2025</td>
+                    <td><span className="fr-badge fr-badge--warning fr-badge--no-icon">Moyenne</span></td>
+                    <td>
+                      <div className="fr-btns-group fr-btns-group--inline">
+                        <Link href="/dashboard/social/case/12350" className="fr-btn fr-btn--sm">
+                          Voir
+                        </Link>
+                        <button className="fr-btn fr-btn--sm fr-btn--secondary">
+                          Prendre en charge
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ALEXI-2025-12349</td>
+                    <td>Présence d'enfants</td>
+                    <td>Thomas Bernard</td>
+                    <td>25 rue Lepic, 75018 Paris</td>
+                    <td>11/05/2025</td>
+                    <td><span className="fr-badge fr-badge--warning fr-badge--no-icon">Moyenne</span></td>
+                    <td>
+                      <div className="fr-btns-group fr-btns-group--inline">
+                        <Link href="/dashboard/social/case/12349" className="fr-btn fr-btn--sm">
+                          Voir
+                        </Link>
+                        <button className="fr-btn fr-btn--sm fr-btn--secondary">
+                          Prendre en charge
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -220,46 +224,48 @@ export default function SocialAlertsPage() {
           </h2>
           <div className="fr-card__content">
             <div className="fr-table fr-table--bordered">
-              <caption>Alertes assignées à des travailleurs sociaux</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Référence</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Locataire</th>
-                  <th scope="col">Assigné à</th>
-                  <th scope="col">Date d'assignation</th>
-                  <th scope="col">Statut</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>ALEXI-2025-12340</td>
-                  <td>Commandement de payer</td>
-                  <td>Lucas Martin</td>
-                  <td>Émilie Dubois</td>
-                  <td>05/05/2025</td>
-                  <td><span className="fr-badge fr-badge--info fr-badge--no-icon">Contact établi</span></td>
-                  <td>
-                    <Link href="/dashboard/social/case/12340" className="fr-btn fr-btn--sm">
-                      Voir
-                    </Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td>ALEXI-2025-12338</td>
-                  <td>Ménage vulnérable</td>
-                  <td>Camille Leroy</td>
-                  <td>Marc Dupont</td>
-                  <td>03/05/2025</td>
-                  <td><span className="fr-badge fr-badge--info fr-badge--no-icon">Rendez-vous planifié</span></td>
-                  <td>
-                    <Link href="/dashboard/social/case/12338" className="fr-btn fr-btn--sm">
-                      Voir
-                    </Link>
-                  </td>
-                </tr>
-              </tbody>
+              <table>
+                <caption>Alertes assignées à des travailleurs sociaux</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Référence</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Locataire</th>
+                    <th scope="col">Assigné à</th>
+                    <th scope="col">Date d'assignation</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ALEXI-2025-12340</td>
+                    <td>Commandement de payer</td>
+                    <td>Lucas Martin</td>
+                    <td>Émilie Dubois</td>
+                    <td>05/05/2025</td>
+                    <td><span className="fr-badge fr-badge--info fr-badge--no-icon">Contact établi</span></td>
+                    <td>
+                      <Link href="/dashboard/social/case/12340" className="fr-btn fr-btn--sm">
+                        Voir
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ALEXI-2025-12338</td>
+                    <td>Ménage vulnérable</td>
+                    <td>Camille Leroy</td>
+                    <td>Marc Dupont</td>
+                    <td>03/05/2025</td>
+                    <td><span className="fr-badge fr-badge--info fr-badge--no-icon">Rendez-vous planifié</span></td>
+                    <td>
+                      <Link href="/dashboard/social/case/12338" className="fr-btn fr-btn--sm">
+                        Voir
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

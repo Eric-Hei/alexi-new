@@ -71,61 +71,63 @@ export default function ResourcesPage() {
           <div className="fr-card__content">
             <p className="fr-text--sm fr-mb-2w">Principales aides disponibles pour les locataires en difficulté</p>
             <div className="fr-table fr-table--bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Aide</th>
-                  <th scope="col">Organisme</th>
-                  <th scope="col">Conditions d'éligibilité</th>
-                  <th scope="col">Montant</th>
-                  <th scope="col">Lien</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Fonds de Solidarité Logement (FSL)</td>
-                  <td>Département</td>
-                  <td>Difficultés à payer son loyer, charges ou factures d'énergie</td>
-                  <td>Variable selon les départements</td>
-                  <td>
-                    <Link href="/resources/fsl" className="fr-link">
-                      En savoir plus
-                    </Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Aide personnalisée au logement (APL)</td>
-                  <td>CAF / MSA</td>
-                  <td>Selon ressources et situation familiale</td>
-                  <td>Variable selon situation</td>
-                  <td>
-                    <Link href="/resources/apl" className="fr-link">
-                      En savoir plus
-                    </Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Action Logement</td>
-                  <td>Action Logement</td>
-                  <td>Salariés du secteur privé en difficulté</td>
-                  <td>Jusqu'à 9 000 €</td>
-                  <td>
-                    <Link href="/resources/action-logement" className="fr-link">
-                      En savoir plus
-                    </Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Aide juridictionnelle</td>
-                  <td>Ministère de la Justice</td>
-                  <td>Selon ressources</td>
-                  <td>Prise en charge partielle ou totale des frais de justice</td>
-                  <td>
-                    <Link href="/resources/legal-aid" className="fr-link">
-                      En savoir plus
-                    </Link>
-                  </td>
-                </tr>
-              </tbody>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Aide</th>
+                    <th scope="col">Organisme</th>
+                    <th scope="col">Conditions d'éligibilité</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Lien</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Fonds de Solidarité Logement (FSL)</td>
+                    <td>Département</td>
+                    <td>Difficultés à payer son loyer, charges ou factures d'énergie</td>
+                    <td>Variable selon les départements</td>
+                    <td>
+                      <Link href="/resources/fsl" className="fr-link">
+                        En savoir plus
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Aide personnalisée au logement (APL)</td>
+                    <td>CAF / MSA</td>
+                    <td>Selon ressources et situation familiale</td>
+                    <td>Variable selon situation</td>
+                    <td>
+                      <Link href="/resources/apl" className="fr-link">
+                        En savoir plus
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Action Logement</td>
+                    <td>Action Logement</td>
+                    <td>Salariés du secteur privé en difficulté</td>
+                    <td>Jusqu'à 9 000 €</td>
+                    <td>
+                      <Link href="/resources/action-logement" className="fr-link">
+                        En savoir plus
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Aide juridictionnelle</td>
+                    <td>Ministère de la Justice</td>
+                    <td>Selon ressources</td>
+                    <td>Prise en charge partielle ou totale des frais de justice</td>
+                    <td>
+                      <Link href="/resources/legal-aid" className="fr-link">
+                        En savoir plus
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

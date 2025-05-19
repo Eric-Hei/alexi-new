@@ -314,16 +314,54 @@ export default function CcapexDashboardPage() {
         </div>
       </div>
 
-      {/* Actions rapides */}
+      {/* Accès rapides */}
       <div className="fr-grid-row fr-grid-row--gutters">
         <div className="fr-col-12">
           <div className="fr-card fr-card--shadow">
             <div className="fr-card__body">
               <h2 className="alexi-card-title">
-                Actions rapides
+                Accès rapides
               </h2>
               <div className="fr-card__content">
-                <div className="fr-btns-group fr-btns-group--inline-md">
+                <div className="fr-grid-row fr-grid-row--gutters">
+                  <div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
+                    <div className="fr-card fr-enlarge-link">
+                      <div className="fr-card__body">
+                        <div className="fr-card__content">
+                          <h3 className="alexi-card-title">
+                            <Link className="fr-card__link" href="/dashboard/ccapex/meetings">Réunions CCAPEX</Link>
+                          </h3>
+                          <p className="fr-card__desc">Consultez les réunions passées et à venir de la commission.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
+                    <div className="fr-card fr-enlarge-link">
+                      <div className="fr-card__body">
+                        <div className="fr-card__content">
+                          <h3 className="alexi-card-title">
+                            <Link className="fr-card__link" href="/dashboard/statistics">Statistiques détaillées</Link>
+                          </h3>
+                          <p className="fr-card__desc">Consultez les statistiques détaillées sur les impayés et les expulsions.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
+                    <div className="fr-card fr-enlarge-link">
+                      <div className="fr-card__body">
+                        <div className="fr-card__content">
+                          <h3 className="alexi-card-title">
+                            <Link className="fr-card__link" href="/dashboard/messages">Messages</Link>
+                          </h3>
+                          <p className="fr-card__desc">Consultez et envoyez des messages aux différents acteurs impliqués.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="fr-btns-group fr-btns-group--inline-md fr-mt-4w">
                   <Link href="/dashboard/ccapex/meeting/new" className="fr-btn fr-fi-calendar-line fr-btn--icon-left">
                     Planifier une réunion
                   </Link>

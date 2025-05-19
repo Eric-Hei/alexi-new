@@ -50,8 +50,8 @@ export default function LandlordMediationPage() {
                 Sélectionnez le dossier concerné
                 <span className="fr-hint-text">Choisissez le dossier pour lequel vous souhaitez demander une médiation</span>
               </label>
-              <select className="fr-select" id="case-select" name="case-select">
-                <option value="" selected disabled hidden>Sélectionnez un dossier</option>
+              <select className="fr-select" id="case-select" name="case-select" defaultValue="">
+                <option value="" disabled hidden>Sélectionnez un dossier</option>
                 <option value="ALEXI-2025-12345">ALEXI-2025-12345 - Jean Dupont - 12 rue des Lilas, 75020 Paris</option>
                 <option value="ALEXI-2025-12346">ALEXI-2025-12346 - Marie Martin - 45 avenue Victor Hugo, 75016 Paris</option>
                 <option value="ALEXI-2025-12347">ALEXI-2025-12347 - Thomas Bernard - 8 rue du Commerce, 75015 Paris</option>

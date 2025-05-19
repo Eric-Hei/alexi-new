@@ -9,73 +9,109 @@ generator client {
 datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
+  // Pour une utilisation en production, envisagez d'utiliser PostgreSQL ou MySQL
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL")
 }
 
+/// Utilisateur du système avec différents rôles possibles
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
-  password  String
+  password  String // Stocké avec hachage sécurisé
   firstName String
   lastName  String
-  role      Role
+  role      Role // Rôle principal de l'utilisateur
   phone     String?
   address   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  isActive  Boolean  @default(true) // Indique si le compte est actif
 
   // Champs spécifiques aux locataires
-  situation String? // Pour les locataires
+  situation     String? // Situation professionnelle (salarié, chômage, etc.)
+  familyStatus  String? // Situation familiale (célibataire, marié, etc.)
+  dependents    Int? // Nombre de personnes à charge
+  monthlyIncome Float? // Revenu mensuel
 
   // Champs spécifiques aux bailleurs
-  type       String? // Pour les bailleurs (privé, social, etc.)
-  properties Int? // Nombre de logements pour les bailleurs
+  type       String? // Type de bailleur (privé, social, etc.)
+  properties Int? // Nombre de logements gérés
+  siret      String? // Numéro SIRET pour les bailleurs professionnels
 
   // Champs spécifiques aux commissaires de justice
-  office String? // Étude pour les commissaires de justice
+  office        String? // Étude pour les commissaires de justice
+  licenseNumber String? // Numéro d'agrément
 
   // Champs spécifiques aux médiateurs
-  organization String? // Organisation pour les médiateurs
+  organization   String? // Organisation pour les médiateurs
+  certifications String? // Certifications professionnelles
 
   // Champs spécifiques aux travailleurs sociaux
-  service String? // Service pour les travailleurs sociaux
+  service          String? // Service (CCAS, CAF, etc.)
+  socialDepartment String? // Département ou secteur d'intervention
 
   // Champs spécifiques aux agents de préfecture et CCAPEX
-  function String? // Fonction pour les agents de préfecture et CCAPEX
+  function             String? // Fonction précise
+  prefectureDepartment String? // Département administratif
 
-  // Relations
-  casesAsLandlord     Case[]             @relation("LandlordCases")
-  casesAsTenant       Case[]             @relation("TenantCases")
-  casesAsOfficer      Case[]             @relation("OfficerCases")
-  casesAsMediator     Case[]             @relation("MediatorCases")
-  casesAsSocialWorker Case[]             @relation("SocialWorkerCases")
-  notifications       Notification[]
-  mediationRequests   MediationRequest[] @relation("MediationRequests")
-  mediationHandled    MediationRequest[] @relation("MediationHandled")
+  // Relations avec les dossiers
+  casesAsLandlord     Case[] @relation("LandlordCases")
+  casesAsTenant       Case[] @relation("TenantCases")
+  casesAsOfficer      Case[] @relation("OfficerCases")
+  casesAsMediator     Case[] @relation("MediatorCases")
+  casesAsSocialWorker Case[] @relation("SocialWorkerCases")
+
+  // Relations avec les notifications et messages
+  notifications    Notification[]
+  sentMessages     Message[]      @relation("SentMessages")
+  receivedMessages Message[]      @relation("ReceivedMessages")
+
+  // Relations avec la médiation
+  mediationRequests MediationRequest[] @relation("MediationRequests")
+  mediationHandled  MediationRequest[] @relation("MediationHandled")
+
+  // Relations avec les aides et plans de remboursement
+  aidApplications          Aid[]           @relation("AidApplicant")
+  repaymentPlansAsTenant   RepaymentPlan[] @relation("RepaymentPlanTenant")
+  repaymentPlansAsLandlord RepaymentPlan[] @relation("RepaymentPlanLandlord")
+
+  // Relations avec les commentaires
+  comments Comment[] @relation("UserComments")
+
+  @@map("users") // Nom de la table dans la base de données
 }
 
+/// Rôles des utilisateurs dans le système
 enum Role {
-  TENANT
-  LANDLORD
-  JUDICIAL_OFFICER
-  MEDIATOR
-  SOCIAL_WORKER
-  PREFECTURE
-  CCAPEX
-  ADMIN
+  TENANT // Locataire
+  LANDLORD // Bailleur
+  JUDICIAL_OFFICER // Commissaire de justice
+  MEDIATOR // Médiateur
+  SOCIAL_WORKER // Travailleur social
+  PREFECTURE // Agent de préfecture
+  CCAPEX // Membre de la CCAPEX
+  ADMIN // Administrateur système
 }
 
+/// Dossier de suivi d'impayés de loyer
 model Case {
   id          String         @id @default(uuid())
   reference   String         @unique // Format: ALEXI-YYYY-XXXXX
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
-  status      CaseStatus
-  stage       ProcedureStage
-  urgency     UrgencyLevel
-  debtAmount  Float
-  description String?
+  status      CaseStatus // État actuel du dossier
+  stage       ProcedureStage // Étape de la procédure
+  urgency     UrgencyLevel // Niveau d'urgence
+  debtAmount  Float // Montant de la dette en euros
+  description String? // Description du dossier
 
-  // Relations
+  // Dates importantes
+  reportDate     DateTime  @default(now()) // Date du signalement initial
+  lastActionDate DateTime? // Date de la dernière action
+  nextDeadline   DateTime? // Prochaine échéance importante
+
+  // Relations avec les utilisateurs
   landlordId     String
   landlord       User    @relation("LandlordCases", fields: [landlordId], references: [id])
   tenantId       String
@@ -92,89 +128,203 @@ model Case {
   notifications     Notification[]
   mediationRequests MediationRequest[]
   events            CaseEvent[]
+  aids              Aid[]
+  repaymentPlans    RepaymentPlan[]
+  messages          Message[]
+  comments          Comment[]
+  ccapexMeetings    CcapexMeetingCase[]
 
   // Informations sur le logement
-  housingType    String? // T1, T2, T3, etc.
+  housingType    String? // Type de logement (T1, T2, T3, etc.)
   housingArea    Float? // Surface en m²
-  rent           Float? // Loyer mensuel
+  rent           Float? // Loyer mensuel hors charges
   charges        Float? // Charges mensuelles
   deposit        Float? // Dépôt de garantie
   leaseStartDate DateTime? // Date de début du bail
-  leaseType      String? // Type de bail
+  leaseType      String? // Type de bail (vide, meublé, etc.)
   leaseDuration  Int? // Durée du bail en mois
-  address        String? // Adresse du logement
+  address        String? // Adresse complète du logement
+  city           String? // Ville
+  zipCode        String? // Code postal
+  department     String? // Département
+
+  // Informations sur les aides au logement
+  housingBenefit Boolean @default(false) // Bénéficie d'une aide au logement
+  benefitAmount  Float? // Montant de l'aide au logement
+
+  @@index([landlordId])
+  @@index([tenantId])
+  @@index([status])
+  @@index([stage])
+  @@index([urgency])
+  @@index([city])
+  @@index([department])
+  @@map("cases") // Nom de la table dans la base de données
 }
 
+/// Statut global du dossier
 enum CaseStatus {
-  OPEN
-  IN_PROGRESS
-  MEDIATION
-  RESOLVED
-  CLOSED
+  OPEN // Dossier ouvert, en cours de traitement
+  IN_PROGRESS // Dossier en cours de traitement actif
+  MEDIATION // En cours de médiation
+  RESOLVED // Problème résolu (dette payée ou plan de remboursement en place)
+  CLOSED // Dossier clôturé (résolu ou autre issue)
+  SUSPENDED // Dossier temporairement suspendu
+  ARCHIVED // Dossier archivé
 }
 
+/// Étape de la procédure d'expulsion
 enum ProcedureStage {
-  UNPAID_REPORT
-  PAYMENT_COMMAND
-  ASSIGNMENT
-  HEARING
-  DECISION
-  EVICTION_COMMAND
-  EVICTION
+  UNPAID_REPORT // Signalement d'impayés
+  PAYMENT_COMMAND // Commandement de payer
+  ASSIGNMENT // Assignation en justice
+  HEARING // Audience
+  DECISION // Décision de justice
+  EVICTION_COMMAND // Commandement de quitter les lieux
+  EVICTION // Expulsion
+  PREVENTION // Phase de prévention (avant procédure)
+  SOCIAL_ASSESSMENT // Évaluation sociale en cours
+  PAYMENT_PLAN // Plan d'apurement en cours
+  CCAPEX_REVIEW // Examen en commission CCAPEX
 }
 
+/// Niveau d'urgence du dossier
 enum UrgencyLevel {
-  LOW
-  MEDIUM
-  HIGH
+  LOW // Faible urgence
+  MEDIUM // Urgence moyenne
+  HIGH // Urgence élevée
+  CRITICAL // Urgence critique
 }
 
+/// Document associé à un dossier
 model Document {
-  id         String       @id @default(uuid())
-  title      String
-  type       DocumentType
-  filePath   String
-  uploadedAt DateTime     @default(now())
+  id          String       @id @default(uuid())
+  title       String // Titre du document
+  type        DocumentType // Type de document
+  filePath    String // Chemin du fichier
+  fileSize    Int? // Taille du fichier en octets
+  mimeType    String? // Type MIME du fichier
+  uploadedAt  DateTime     @default(now())
+  description String? // Description du document
+  isPublic    Boolean      @default(false) // Document accessible à tous les utilisateurs concernés
 
   // Relations
-  caseId String
-  case   Case   @relation(fields: [caseId], references: [id])
+  caseId       String
+  case         Case    @relation(fields: [caseId], references: [id])
+  uploadedById String? // ID de l'utilisateur qui a téléchargé le document
+  aidId        String? // ID de l'aide associée au document
+  aid          Aid?    @relation("AidDocuments", fields: [aidId], references: [id])
+
+  @@index([caseId])
+  @@index([type])
+  @@index([aidId])
+  @@map("documents")
 }
 
+/// Types de documents pouvant être associés à un dossier
 enum DocumentType {
-  PAYMENT_COMMAND
-  ASSIGNMENT
-  COURT_DECISION
-  EVICTION_COMMAND
-  PAYMENT_PLAN
-  MEDIATION_AGREEMENT
-  ID_DOCUMENT
-  LEASE
-  INCOME_PROOF
-  OTHER
+  // Documents de procédure
+  PAYMENT_COMMAND // Commandement de payer
+  ASSIGNMENT // Assignation en justice
+  COURT_DECISION // Décision de justice
+  EVICTION_COMMAND // Commandement de quitter les lieux
+  EVICTION_NOTICE // Avis d'expulsion
+
+  // Documents contractuels
+  LEASE // Contrat de bail
+  LEASE_AMENDMENT // Avenant au bail
+  INVENTORY // État des lieux
+
+  // Documents financiers
+  PAYMENT_PLAN // Plan d'apurement
+  PAYMENT_PROOF // Preuve de paiement
+  INCOME_PROOF // Justificatif de revenus
+  TAX_NOTICE // Avis d'imposition
+  BANK_STATEMENT // Relevé bancaire
+
+  // Documents d'identité
+  ID_DOCUMENT // Pièce d'identité
+  FAMILY_RECORD_BOOK // Livret de famille
+  RESIDENCE_PERMIT // Titre de séjour
+
+  // Documents de médiation
+  MEDIATION_AGREEMENT // Accord de médiation
+  MEDIATION_REPORT // Compte-rendu de médiation
+
+  // Documents d'aide sociale
+  AID_APPLICATION // Demande d'aide
+  AID_SUPPORTING_DOCUMENT // Document justificatif pour une aide
+  AID_DECISION_NOTIFICATION // Notification de décision d'aide
+  SOCIAL_ASSESSMENT // Évaluation sociale
+
+  // Autres
+  CORRESPONDENCE // Correspondance
+  NOTICE // Notification
+  REPORT // Rapport
+  OTHER // Autre type de document
 }
 
+/// Notification envoyée à un utilisateur
 model Notification {
-  id        String   @id @default(uuid())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  read      Boolean  @default(false)
+  id        String               @id @default(uuid())
+  title     String // Titre de la notification
+  content   String // Contenu de la notification
+  createdAt DateTime             @default(now())
+  read      Boolean              @default(false) // Indique si la notification a été lue
+  readAt    DateTime? // Date de lecture de la notification
+  type      NotificationType // Type de notification
+  priority  NotificationPriority @default(NORMAL) // Priorité de la notification
+  expiresAt DateTime? // Date d'expiration de la notification
 
   // Relations
   userId String
   user   User    @relation(fields: [userId], references: [id])
   caseId String?
   case   Case?   @relation(fields: [caseId], references: [id])
+
+  @@index([userId])
+  @@index([caseId])
+  @@index([read])
+  @@index([type])
+  @@map("notifications")
 }
 
+/// Types de notifications
+enum NotificationType {
+  CASE_UPDATE // Mise à jour d'un dossier
+  DOCUMENT_ADDED // Nouveau document ajouté
+  DEADLINE_REMINDER // Rappel d'échéance
+  PAYMENT_DUE // Paiement à effectuer
+  PAYMENT_RECEIVED // Paiement reçu
+  MEDIATION_REQUEST // Demande de médiation
+  MEDIATION_UPDATE // Mise à jour de médiation
+  AID_UPDATE // Mise à jour d'une aide
+  SYSTEM // Notification système
+  OTHER // Autre type de notification
+}
+
+/// Priorités des notifications
+enum NotificationPriority {
+  LOW // Faible priorité
+  NORMAL // Priorité normale
+  HIGH // Haute priorité
+  URGENT // Priorité urgente
+}
+
+/// Demande de médiation entre un locataire et un bailleur
 model MediationRequest {
   id        String          @id @default(uuid())
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
-  status    MediationStatus
-  reason    String
-  proposal  String?
+  status    MediationStatus // Statut de la demande de médiation
+  reason    String // Motif de la demande
+  proposal  String? // Proposition de résolution
+  deadline  DateTime? // Date limite pour la médiation
+
+  // Détails supplémentaires
+  disputeAmount      Float? // Montant du litige
+  disputeDescription String? // Description détaillée du litige
+  preferredLanguage  String? // Langue préférée pour la médiation
 
   // Relations
   requesterId String
@@ -186,60 +336,393 @@ model MediationRequest {
 
   // Informations sur les rendez-vous
   meetings MediationMeeting[]
+
+  @@index([requesterId])
+  @@index([mediatorId])
+  @@index([caseId])
+  @@index([status])
+  @@map("mediation_requests")
 }
 
+/// Statut d'une demande de médiation
 enum MediationStatus {
-  REQUESTED
-  ACCEPTED
-  IN_PROGRESS
-  AGREEMENT_FOUND
-  FAILED
-  CANCELLED
+  REQUESTED // Demande soumise
+  ACCEPTED // Demande acceptée par le médiateur
+  IN_PROGRESS // Médiation en cours
+  AGREEMENT_FOUND // Accord trouvé
+  FAILED // Échec de la médiation
+  CANCELLED // Médiation annulée
+  PENDING_APPROVAL // En attente d'approbation par l'autre partie
 }
 
+/// Rendez-vous de médiation
 model MediationMeeting {
   id        String        @id @default(uuid())
-  date      DateTime
-  location  String?
-  videoLink String?
-  status    MeetingStatus
-  notes     String?
+  date      DateTime // Date et heure du rendez-vous
+  duration  Int           @default(60) // Durée en minutes
+  location  String? // Lieu physique du rendez-vous
+  videoLink String? // Lien pour la visioconférence
+  status    MeetingStatus // Statut du rendez-vous
+  notes     String? // Notes sur le rendez-vous
+  summary   String? // Résumé de la réunion (après qu'elle ait eu lieu)
+
+  // Participants
+  attendees String? // Liste des participants (format JSON)
 
   // Relations
   mediationId String
   mediation   MediationRequest @relation(fields: [mediationId], references: [id])
+
+  @@index([mediationId])
+  @@index([date])
+  @@index([status])
+  @@map("mediation_meetings")
 }
 
+/// Statut d'un rendez-vous de médiation
 enum MeetingStatus {
-  SCHEDULED
-  COMPLETED
-  CANCELLED
-  POSTPONED
+  SCHEDULED // Planifié
+  CONFIRMED // Confirmé par toutes les parties
+  COMPLETED // Terminé
+  CANCELLED // Annulé
+  POSTPONED // Reporté
+  NO_SHOW // Au moins une partie ne s'est pas présentée
 }
 
+/// Événement lié à un dossier (pour l'historique)
 model CaseEvent {
   id          String    @id @default(uuid())
-  date        DateTime
-  type        EventType
-  description String
-  actor       String // Qui a effectué l'action
+  date        DateTime // Date et heure de l'événement
+  type        EventType // Type d'événement
+  description String // Description de l'événement
+  actor       String // Qui a effectué l'action (nom ou identifiant)
+  actorRole   Role? // Rôle de l'acteur
+  metadata    String? // Métadonnées supplémentaires (format JSON)
+  importance  Int       @default(1) // Importance de l'événement (1-5)
 
   // Relations
   caseId String
   case   Case   @relation(fields: [caseId], references: [id])
+
+  @@index([caseId])
+  @@index([date])
+  @@index([type])
+  @@index([importance])
+  @@map("case_events")
 }
 
+/// Types d'événements liés à un dossier
 enum EventType {
-  CASE_CREATED
-  STATUS_CHANGED
-  STAGE_CHANGED
-  DOCUMENT_ADDED
-  MEDIATION_REQUESTED
-  MEDIATION_ACCEPTED
-  MEDIATION_COMPLETED
-  PAYMENT_MADE
-  PAYMENT_PLAN_CREATED
-  SOCIAL_WORKER_ASSIGNED
-  CCAPEX_REVIEW
-  OTHER
+  // Événements de création et de modification
+  CASE_CREATED // Création du dossier
+  CASE_UPDATED // Mise à jour du dossier
+  STATUS_CHANGED // Changement de statut
+  STAGE_CHANGED // Changement d'étape de procédure
+
+  // Événements liés aux documents
+  DOCUMENT_ADDED // Ajout d'un document
+  DOCUMENT_UPDATED // Mise à jour d'un document
+  DOCUMENT_DELETED // Suppression d'un document
+
+  // Événements liés à la médiation
+  MEDIATION_REQUESTED // Demande de médiation
+  MEDIATION_ACCEPTED // Médiation acceptée
+  MEDIATION_MEETING // Réunion de médiation
+  MEDIATION_COMPLETED // Médiation terminée
+  MEDIATION_FAILED // Échec de la médiation
+
+  // Événements liés aux paiements
+  PAYMENT_MADE // Paiement effectué
+  PAYMENT_MISSED // Paiement manqué
+  PAYMENT_PLAN_CREATED // Plan de paiement créé
+  PAYMENT_PLAN_UPDATED // Plan de paiement mis à jour
+  PAYMENT_PLAN_COMPLETED // Plan de paiement terminé
+
+  // Événements liés aux intervenants
+  SOCIAL_WORKER_ASSIGNED // Travailleur social assigné
+  OFFICER_ASSIGNED // Commissaire de justice assigné
+  MEDIATOR_ASSIGNED // Médiateur assigné
+
+  // Événements liés aux aides
+  AID_REQUESTED // Demande d'aide
+  AID_APPROVED // Aide approuvée
+  AID_REJECTED // Aide rejetée
+  AID_PAID // Aide versée
+
+  // Événements liés aux procédures administratives
+  CCAPEX_REVIEW // Examen en commission CCAPEX
+  CCAPEX_DECISION // Décision de la CCAPEX
+  COURT_HEARING // Audience au tribunal
+  COURT_DECISION // Décision du tribunal
+
+  // Événements liés à la communication
+  NOTIFICATION_SENT // Notification envoyée
+  MESSAGE_SENT // Message envoyé
+  CALL_MADE // Appel téléphonique effectué
+
+  // Autres
+  COMMENT_ADDED // Commentaire ajouté
+  OTHER // Autre type d'événement
+}
+
+/// Types d'aides financières disponibles
+enum AidType {
+  FSL // Fonds de Solidarité pour le Logement
+  CAF // Caisse d'Allocations Familiales
+  ACTION_LOGEMENT // Action Logement
+  CCAS // Centre Communal d'Action Sociale
+  MAIRIE // Aide municipale
+  DEPARTEMENT // Aide départementale
+  ASSOCIATION // Aide associative
+  AUTRE // Autre type d'aide
+}
+
+/// Statuts possibles d'une demande d'aide
+enum AidStatus {
+  EN_ATTENTE_DE_SOUMISSION // L'utilisateur prépare sa demande
+  SOUMISE // La demande a été envoyée à l'organisme
+  EN_COURS_D_INSTRUCTION // L'organisme traite la demande
+  COMPLEMENT_REQUIS // Des documents ou informations supplémentaires sont demandés
+  ACCEPTEE // La demande a été acceptée
+  ACCEPTEE_PARTIELLEMENT // La demande a été acceptée partiellement
+  REFUSEE // La demande a été refusée
+  VERSEMENT_EN_COURS // Le paiement de l'aide est en cours
+  VERSEE // L'aide a été payée
+  ANNULEE // La demande a été annulée
+}
+
+/// Demande d'aide financière
+model Aid {
+  id             String    @id @default(uuid())
+  type           AidType // Type d'aide demandée
+  status         AidStatus // Statut de la demande
+  amount         Float? // Montant demandé/accordé
+  requestedAt    DateTime  @default(now()) // Date de la demande
+  submittedAt    DateTime? // Date de soumission à l'organisme
+  validatedAt    DateTime? // Date de validation par l'organisme
+  decisionDate   DateTime? // Date de la décision
+  paymentDate    DateTime? // Date du versement
+  reason         String? // Motif de la demande ou du refus
+  applicationRef String? // Référence du dossier auprès de l'organisme
+
+  // Détails supplémentaires
+  aidPurpose  String? // Objet précis de l'aide (arriérés, caution, etc.)
+  beneficiary String? // Bénéficiaire du versement (locataire, bailleur, etc.)
+
+  // Relations
+  case        Case       @relation(fields: [caseId], references: [id])
+  caseId      String
+  applicant   User       @relation("AidApplicant", fields: [applicantId], references: [id])
+  applicantId String
+  documents   Document[] @relation("AidDocuments")
+
+  // Suivi et commentaires
+  notes        String? // Notes internes
+  followUpDate DateTime? // Date de suivi prévue
+
+  @@index([caseId])
+  @@index([applicantId])
+  @@index([status])
+  @@index([type])
+  @@map("aids")
+}
+
+/// Statut d'un plan de remboursement
+enum RepaymentPlanStatus {
+  DRAFT // Brouillon, en cours de création
+  PROPOSED // Proposé, en attente d'acceptation
+  ACTIVE // Actif, en cours d'exécution
+  COMPLETED // Terminé avec succès
+  DEFAULTED // En défaut de paiement
+  RENEGOTIATED // Renégocié
+  CANCELLED // Annulé
+}
+
+/// Plan de remboursement d'une dette locative
+model RepaymentPlan {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Informations principales
+  totalAmount Float // Montant total à rembourser
+  startDate   DateTime // Date de début du plan
+  endDate     DateTime // Date de fin prévue
+  status      RepaymentPlanStatus // Statut du plan
+
+  // Détails du plan
+  frequency      PaymentFrequency @default(MONTHLY) // Fréquence des paiements
+  initialPayment Float? // Paiement initial
+  regularAmount  Float // Montant régulier des versements
+
+  // Relations
+  case         Case          @relation(fields: [caseId], references: [id])
+  caseId       String
+  tenant       User          @relation("RepaymentPlanTenant", fields: [tenantId], references: [id])
+  tenantId     String
+  landlord     User?         @relation("RepaymentPlanLandlord", fields: [landlordId], references: [id])
+  landlordId   String?
+  installments Installment[] // Échéances du plan
+
+  // Suivi et commentaires
+  notes       String? // Notes sur le plan
+  validatedBy String? // Qui a validé le plan
+  validatedAt DateTime? // Date de validation
+
+  @@index([caseId])
+  @@index([tenantId])
+  @@index([landlordId])
+  @@index([status])
+  @@map("repayment_plans")
+}
+
+/// Fréquence des paiements pour un plan de remboursement
+enum PaymentFrequency {
+  WEEKLY // Hebdomadaire
+  BIWEEKLY // Bimensuel
+  MONTHLY // Mensuel
+  QUARTERLY // Trimestriel
+}
+
+/// Statut d'une échéance de paiement
+enum InstallmentStatus {
+  PENDING // À venir
+  PAID // Payée
+  PARTIALLY_PAID // Partiellement payée
+  LATE // En retard
+  DEFAULTED // Défaut de paiement
+  CANCELLED // Annulée
+}
+
+/// Échéance de paiement dans un plan de remboursement
+model Installment {
+  id String @id @default(uuid())
+
+  // Informations principales
+  dueDate    DateTime // Date d'échéance
+  amount     Float // Montant à payer
+  paidAmount Float? // Montant effectivement payé
+  paidAt     DateTime? // Date du paiement
+  status     InstallmentStatus // Statut de l'échéance
+
+  // Détails du paiement
+  paymentMethod    String? // Méthode de paiement
+  paymentReference String? // Référence du paiement
+
+  // Relations
+  repaymentPlan   RepaymentPlan @relation(fields: [repaymentPlanId], references: [id])
+  repaymentPlanId String
+
+  // Suivi et commentaires
+  notes String? // Notes sur l'échéance
+
+  @@index([repaymentPlanId])
+  @@index([dueDate])
+  @@index([status])
+  @@map("installments")
+}
+
+/// Message échangé entre utilisateurs
+model Message {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  content   String // Contenu du message
+  read      Boolean   @default(false) // Message lu ou non
+  readAt    DateTime? // Date de lecture
+
+  // Relations
+  senderId    String // ID de l'expéditeur
+  sender      User    @relation("SentMessages", fields: [senderId], references: [id])
+  recipientId String // ID du destinataire
+  recipient   User    @relation("ReceivedMessages", fields: [recipientId], references: [id])
+  caseId      String? // ID du dossier associé (optionnel)
+  case        Case?   @relation(fields: [caseId], references: [id])
+
+  @@index([senderId])
+  @@index([recipientId])
+  @@index([caseId])
+  @@index([read])
+  @@map("messages")
+}
+
+/// Commentaire sur un dossier
+model Comment {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  content    String // Contenu du commentaire
+  isInternal Boolean  @default(false) // Commentaire interne (non visible par tous)
+
+  // Relations
+  authorId String // ID de l'auteur
+  author   User   @relation("UserComments", fields: [authorId], references: [id])
+  caseId   String // ID du dossier
+  case     Case   @relation(fields: [caseId], references: [id])
+
+  @@index([caseId])
+  @@index([authorId])
+  @@map("comments")
+}
+
+/// Statistique sur les dossiers (pour le reporting)
+model CaseStatistic {
+  id         String   @id @default(uuid())
+  date       DateTime @default(now()) // Date de la statistique
+  period     String // Période concernée (mois, trimestre, année)
+  department String // Département
+  city       String? // Ville (optionnel)
+
+  // Statistiques
+  newCasesCount     Int // Nombre de nouveaux dossiers
+  resolvedCount     Int // Nombre de dossiers résolus
+  evictionCount     Int // Nombre d'expulsions
+  mediationCount    Int // Nombre de médiations
+  preventionRate    Float // Taux de prévention
+  averageDebtAmount Float // Montant moyen de la dette
+
+  @@index([date])
+  @@index([department])
+  @@index([city])
+  @@map("case_statistics")
+}
+
+/// Réunion CCAPEX
+model CcapexMeeting {
+  id         String   @id @default(uuid())
+  date       DateTime // Date de la réunion
+  location   String // Lieu de la réunion
+  department String // Département concerné
+
+  // Détails
+  agenda    String? // Ordre du jour
+  minutes   String? // Compte-rendu
+  attendees String? // Participants (format JSON)
+
+  // Relations
+  cases CcapexMeetingCase[] // Dossiers examinés
+
+  @@index([date])
+  @@index([department])
+  @@map("ccapex_meetings")
+}
+
+/// Relation entre une réunion CCAPEX et un dossier
+model CcapexMeetingCase {
+  id String @id @default(uuid())
+
+  // Relations
+  meetingId String
+  meeting   CcapexMeeting @relation(fields: [meetingId], references: [id])
+  caseId    String
+  case      Case          @relation(fields: [caseId], references: [id])
+
+  // Détails
+  decision       String? // Décision prise
+  recommendation String? // Recommandation
+  priority       Int     @default(0) // Priorité du dossier dans la réunion
+
+  @@unique([meetingId, caseId]) // Un dossier ne peut être examiné qu'une fois par réunion
+  @@index([meetingId])
+  @@index([caseId])
+  @@map("ccapex_meeting_cases")
 }

@@ -256,64 +256,66 @@ export default function AnalyticsDashboardPage() {
           <div className="fr-card__content">
             <p className="fr-text--sm fr-mb-2w">Statistiques par commune</p>
             <div className="fr-table fr-table--bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Commune</th>
-                  <th scope="col">Signalements</th>
-                  <th scope="col">Commandements</th>
-                  <th scope="col">Assignations</th>
-                  <th scope="col">Décisions</th>
-                  <th scope="col">Expulsions</th>
-                  <th scope="col">Taux de prévention</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Paris 20e</td>
-                  <td>145</td>
-                  <td>98</td>
-                  <td>65</td>
-                  <td>42</td>
-                  <td>12</td>
-                  <td>58%</td>
-                </tr>
-                <tr>
-                  <td>Paris 18e</td>
-                  <td>132</td>
-                  <td>87</td>
-                  <td>54</td>
-                  <td>38</td>
-                  <td>10</td>
-                  <td>62%</td>
-                </tr>
-                <tr>
-                  <td>Paris 19e</td>
-                  <td>128</td>
-                  <td>85</td>
-                  <td>52</td>
-                  <td>35</td>
-                  <td>9</td>
-                  <td>65%</td>
-                </tr>
-                <tr>
-                  <td>Paris 15e</td>
-                  <td>98</td>
-                  <td>65</td>
-                  <td>42</td>
-                  <td>28</td>
-                  <td>7</td>
-                  <td>70%</td>
-                </tr>
-                <tr>
-                  <td>Paris 13e</td>
-                  <td>95</td>
-                  <td>62</td>
-                  <td>40</td>
-                  <td>25</td>
-                  <td>6</td>
-                  <td>72%</td>
-                </tr>
-              </tbody>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Commune</th>
+                    <th scope="col">Signalements</th>
+                    <th scope="col">Commandements</th>
+                    <th scope="col">Assignations</th>
+                    <th scope="col">Décisions</th>
+                    <th scope="col">Expulsions</th>
+                    <th scope="col">Taux de prévention</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Paris 20e</td>
+                    <td>145</td>
+                    <td>98</td>
+                    <td>65</td>
+                    <td>42</td>
+                    <td>12</td>
+                    <td>58%</td>
+                  </tr>
+                  <tr>
+                    <td>Paris 18e</td>
+                    <td>132</td>
+                    <td>87</td>
+                    <td>54</td>
+                    <td>38</td>
+                    <td>10</td>
+                    <td>62%</td>
+                  </tr>
+                  <tr>
+                    <td>Paris 19e</td>
+                    <td>128</td>
+                    <td>85</td>
+                    <td>52</td>
+                    <td>35</td>
+                    <td>9</td>
+                    <td>65%</td>
+                  </tr>
+                  <tr>
+                    <td>Paris 15e</td>
+                    <td>98</td>
+                    <td>65</td>
+                    <td>42</td>
+                    <td>28</td>
+                    <td>7</td>
+                    <td>70%</td>
+                  </tr>
+                  <tr>
+                    <td>Paris 13e</td>
+                    <td>95</td>
+                    <td>62</td>
+                    <td>40</td>
+                    <td>25</td>
+                    <td>6</td>
+                    <td>72%</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

@@ -99,8 +99,8 @@ export default function MediationPage() {
                     <label className="fr-label" htmlFor="payment-duration">
                       Durée de remboursement souhaitée
                     </label>
-                    <select className="fr-select" id="payment-duration" name="payment-duration" required>
-                      <option value="" selected disabled hidden>Sélectionnez une option</option>
+                    <select className="fr-select" id="payment-duration" name="payment-duration" required defaultValue="">
+                      <option value="" disabled hidden>Sélectionnez une option</option>
                       <option value="3">3 mois</option>
                       <option value="6">6 mois</option>
                       <option value="9">9 mois</option>

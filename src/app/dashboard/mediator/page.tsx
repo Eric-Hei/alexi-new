@@ -94,61 +94,63 @@ export default function MediatorDashboardPage() {
           <div className="fr-card__content">
             <p className="fr-text--sm fr-mb-2w">Demandes en attente d'acceptation</p>
             <div className="fr-table fr-table--bordered">
-              <thead>
-                <tr>
-                  <th scope="col" style={{ minWidth: '140px' }}>Référence</th>
-                  <th scope="col">Date de demande</th>
-                  <th scope="col">Demandeur</th>
-                  <th scope="col">Partie adverse</th>
-                  <th scope="col">Montant impayé</th>
-                  <th scope="col">Urgence</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>MED-2025-1234</td>
-                  <td>10/05/2025</td>
-                  <td>SCI Les Lilas (Bailleur)</td>
-                  <td>Jean Dupont</td>
-                  <td>2 500,00 €</td>
-                  <td><span className="fr-badge fr-badge--error fr-badge--no-icon">Élevée</span></td>
-                  <td>
-                    <div className="fr-btns-group fr-btns-group--inline">
-                      <Link href="/dashboard/mediator/case/1234" className="fr-btn fr-btn--sm">
-                        Voir
-                      </Link>
-                      <button className="fr-btn fr-btn--sm fr-btn--secondary">
-                        Accepter
-                      </button>
-                      <button className="fr-btn fr-btn--sm fr-btn--tertiary">
-                        Refuser
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>MED-2025-1235</td>
-                  <td>11/05/2025</td>
-                  <td>Marie Martin (Locataire)</td>
-                  <td>Pierre Durand</td>
-                  <td>1 800,00 €</td>
-                  <td><span className="fr-badge fr-badge--warning fr-badge--no-icon">Moyenne</span></td>
-                  <td>
-                    <div className="fr-btns-group fr-btns-group--inline">
-                      <Link href="/dashboard/mediator/case/1235" className="fr-btn fr-btn--sm">
-                        Voir
-                      </Link>
-                      <button className="fr-btn fr-btn--sm fr-btn--secondary">
-                        Accepter
-                      </button>
-                      <button className="fr-btn fr-btn--sm fr-btn--tertiary">
-                        Refuser
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col" style={{ minWidth: '140px' }}>Référence</th>
+                    <th scope="col">Date de demande</th>
+                    <th scope="col">Demandeur</th>
+                    <th scope="col">Partie adverse</th>
+                    <th scope="col">Montant impayé</th>
+                    <th scope="col">Urgence</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>MED-2025-1234</td>
+                    <td>10/05/2025</td>
+                    <td>SCI Les Lilas (Bailleur)</td>
+                    <td>Jean Dupont</td>
+                    <td>2 500,00 €</td>
+                    <td><span className="fr-badge fr-badge--error fr-badge--no-icon">Élevée</span></td>
+                    <td>
+                      <div className="fr-btns-group fr-btns-group--inline">
+                        <Link href="/dashboard/mediator/case/1234" className="fr-btn fr-btn--sm">
+                          Voir
+                        </Link>
+                        <button className="fr-btn fr-btn--sm fr-btn--secondary">
+                          Accepter
+                        </button>
+                        <button className="fr-btn fr-btn--sm fr-btn--tertiary">
+                          Refuser
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>MED-2025-1235</td>
+                    <td>11/05/2025</td>
+                    <td>Marie Martin (Locataire)</td>
+                    <td>Pierre Durand</td>
+                    <td>1 800,00 €</td>
+                    <td><span className="fr-badge fr-badge--warning fr-badge--no-icon">Moyenne</span></td>
+                    <td>
+                      <div className="fr-btns-group fr-btns-group--inline">
+                        <Link href="/dashboard/mediator/case/1235" className="fr-btn fr-btn--sm">
+                          Voir
+                        </Link>
+                        <button className="fr-btn fr-btn--sm fr-btn--secondary">
+                          Accepter
+                        </button>
+                        <button className="fr-btn fr-btn--sm fr-btn--tertiary">
+                          Refuser
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -163,55 +165,57 @@ export default function MediatorDashboardPage() {
           <div className="fr-card__content">
             <p className="fr-text--sm fr-mb-2w">Médiations actives nécessitant un suivi</p>
             <div className="fr-table fr-table--bordered">
-              <thead>
-                <tr>
-                  <th scope="col" style={{ minWidth: '140px' }}>Référence</th>
-                  <th scope="col">Bailleur</th>
-                  <th scope="col">Locataire</th>
-                  <th scope="col">Statut</th>
-                  <th scope="col">Prochaine étape</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>MED-2025-1230</td>
-                  <td>OPHLM Paris</td>
-                  <td>Sophie Petit</td>
-                  <td><span className="fr-badge fr-badge--info fr-badge--no-icon">Rendez-vous planifié</span></td>
-                  <td>Séance de médiation</td>
-                  <td>15/05/2025</td>
-                  <td>
-                    <div className="fr-btns-group fr-btns-group--inline">
-                      <Link href="/dashboard/mediator/case/1230" className="fr-btn fr-btn--sm">
-                        Gérer
-                      </Link>
-                      <Link href="/dashboard/mediator/meeting/1230" className="fr-btn fr-btn--sm fr-btn--secondary">
-                        Préparer
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>MED-2025-1228</td>
-                  <td>SCI Montmartre</td>
-                  <td>Thomas Bernard</td>
-                  <td><span className="fr-badge fr-badge--success fr-badge--no-icon">Accord trouvé</span></td>
-                  <td>Signature du protocole</td>
-                  <td>18/05/2025</td>
-                  <td>
-                    <div className="fr-btns-group fr-btns-group--inline">
-                      <Link href="/dashboard/mediator/case/1228" className="fr-btn fr-btn--sm">
-                        Gérer
-                      </Link>
-                      <Link href="/dashboard/mediator/protocol/1228" className="fr-btn fr-btn--sm fr-btn--secondary">
-                        Protocole
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col" style={{ minWidth: '140px' }}>Référence</th>
+                    <th scope="col">Bailleur</th>
+                    <th scope="col">Locataire</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Prochaine étape</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>MED-2025-1230</td>
+                    <td>OPHLM Paris</td>
+                    <td>Sophie Petit</td>
+                    <td><span className="fr-badge fr-badge--info fr-badge--no-icon">Rendez-vous planifié</span></td>
+                    <td>Séance de médiation</td>
+                    <td>15/05/2025</td>
+                    <td>
+                      <div className="fr-btns-group fr-btns-group--inline">
+                        <Link href="/dashboard/mediator/case/1230" className="fr-btn fr-btn--sm">
+                          Gérer
+                        </Link>
+                        <Link href="/dashboard/mediator/meeting/1230" className="fr-btn fr-btn--sm fr-btn--secondary">
+                          Préparer
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>MED-2025-1228</td>
+                    <td>SCI Montmartre</td>
+                    <td>Thomas Bernard</td>
+                    <td><span className="fr-badge fr-badge--success fr-badge--no-icon">Accord trouvé</span></td>
+                    <td>Signature du protocole</td>
+                    <td>18/05/2025</td>
+                    <td>
+                      <div className="fr-btns-group fr-btns-group--inline">
+                        <Link href="/dashboard/mediator/case/1228" className="fr-btn fr-btn--sm">
+                          Gérer
+                        </Link>
+                        <Link href="/dashboard/mediator/protocol/1228" className="fr-btn fr-btn--sm fr-btn--secondary">
+                          Protocole
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -226,45 +230,47 @@ export default function MediatorDashboardPage() {
           <div className="fr-card__content">
             <p className="fr-text--sm fr-mb-2w">Prochains rendez-vous de médiation</p>
             <div className="fr-table fr-table--bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Heure</th>
-                  <th scope="col" style={{ minWidth: '140px' }}>Référence</th>
-                  <th scope="col">Parties</th>
-                  <th scope="col">Format</th>
-                  <th scope="col">Lieu/Lien</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>15/05/2025</td>
-                  <td>10:00</td>
-                  <td>MED-2025-1230</td>
-                  <td>OPHLM Paris / Sophie Petit</td>
-                  <td>Présentiel</td>
-                  <td>12 rue de la Médiation, 75001 Paris</td>
-                  <td>
-                    <Link href="/dashboard/mediator/meeting/1230" className="fr-btn fr-btn--sm">
-                      Détails
-                    </Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td>16/05/2025</td>
-                  <td>14:30</td>
-                  <td>MED-2025-1229</td>
-                  <td>Dupont SA / Robert Martin</td>
-                  <td>Visioconférence</td>
-                  <td>https://visio.alexi.gouv.fr/med-1229</td>
-                  <td>
-                    <Link href="/dashboard/mediator/meeting/1229" className="fr-btn fr-btn--sm">
-                      Détails
-                    </Link>
-                  </td>
-                </tr>
-              </tbody>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Heure</th>
+                    <th scope="col" style={{ minWidth: '140px' }}>Référence</th>
+                    <th scope="col">Parties</th>
+                    <th scope="col">Format</th>
+                    <th scope="col">Lieu/Lien</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>15/05/2025</td>
+                    <td>10:00</td>
+                    <td>MED-2025-1230</td>
+                    <td>OPHLM Paris / Sophie Petit</td>
+                    <td>Présentiel</td>
+                    <td>12 rue de la Médiation, 75001 Paris</td>
+                    <td>
+                      <Link href="/dashboard/mediator/meeting/1230" className="fr-btn fr-btn--sm">
+                        Détails
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>16/05/2025</td>
+                    <td>14:30</td>
+                    <td>MED-2025-1229</td>
+                    <td>Dupont SA / Robert Martin</td>
+                    <td>Visioconférence</td>
+                    <td>https://visio.alexi.gouv.fr/med-1229</td>
+                    <td>
+                      <Link href="/dashboard/mediator/meeting/1229" className="fr-btn fr-btn--sm">
+                        Détails
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
