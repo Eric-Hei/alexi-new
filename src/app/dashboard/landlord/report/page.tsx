@@ -56,8 +56,8 @@ export default function ReportUnpaidRentPage() {
                     <label className="fr-label" htmlFor="property-type">
                       Type de logement
                     </label>
-                    <select className="fr-select" id="property-type" name="property-type" required>
-                      <option value="" selected disabled hidden>Sélectionnez une option</option>
+                    <select className="fr-select" id="property-type" name="property-type" required defaultValue="">
+                      <option value="" disabled hidden>Sélectionnez une option</option>
                       <option value="apartment">Appartement</option>
                       <option value="house">Maison</option>
                       <option value="studio">Studio</option>

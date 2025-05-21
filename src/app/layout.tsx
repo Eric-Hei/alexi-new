@@ -105,6 +105,9 @@ export default function RootLayout({
                     <a className="fr-footer__bottom-link" href="/privacy">Politique de confidentialité</a>
                   </li>
                   <li className="fr-footer__bottom-item">
+                    <a className="fr-footer__bottom-link" href="/privacy">Accessibilité : Non conforme</a>
+                  </li>
+                  <li className="fr-footer__bottom-item">
                     <a className="fr-footer__bottom-link" href="/terms">Conditions d'utilisation</a>
                   </li>
                   <li className="fr-footer__bottom-item">
