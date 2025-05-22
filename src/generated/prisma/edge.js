@@ -561,7 +561,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\lihe3\\Desktop\\alexi-new\\src\\generated\\prisma",
+      "value": "/Users/erich/Projets/Alexi/alexi-new/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -570,17 +570,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\lihe3\\Desktop\\alexi-new\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/erich/Projets/Alexi/alexi-new/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.7.0",
@@ -589,6 +588,7 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
